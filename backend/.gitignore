@@ -39,3 +39,5 @@ tool-output/
 
 .idea/
 .next/
+
+venv

@@ -1,0 +1,8 @@
+{
+  "experimental": {
+    "outputFileTracingIncludes": {
+      "/*": ["./cache/**/*"]
+    },
+    "serverComponentsExternalPackages": ["sharp", "onnxruntime-node"]
+  }
+}
