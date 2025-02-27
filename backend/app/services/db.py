@@ -1,6 +1,9 @@
 import pymongo
 import json
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 MONGO_DB_CLIENT = os.getenv("MONGO_DB_CLIENT")
 DB_CLIENT = pymongo.MongoClient(
     MONGO_DB_CLIENT,
@@ -9,8 +12,12 @@ DB_CLIENT = pymongo.MongoClient(
 DB = DB_CLIENT['precision-fda']
 COLLECTION = DB['fda-events']
 
+print('MONGO', MONGO_DB_CLIENT)
+
 
 def get_all_events(skip: int, limit: int):
+    print('MONGO 2 IN HERE', MONGO_DB_CLIENT)
+
     return list(
         COLLECTION.find({})
             .sort("stamp.date", -1)  # Sort by `stamp.date` in ascending order
@@ -20,6 +27,8 @@ def get_all_events(skip: int, limit: int):
 
 
 def get_event_by_id(event_id: str):
+    print('MONGO 3 IN HERE', MONGO_DB_CLIENT)
+
     return COLLECTION.find_one({"_id": event_id})
 
 

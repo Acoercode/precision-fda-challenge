@@ -9,7 +9,7 @@ const generateDot = (data: any[], selectedNodeId: number) => {
             rankdir=LR;
             node [
                 shape=circle,
-                style="filled,setlinewidth(2)",  // Set line width for borders
+                style="filled,setlinewidth(2)",
                 width=0.3,
                 fixedsize=true,
                 fontsize=10,
@@ -18,19 +18,18 @@ const generateDot = (data: any[], selectedNodeId: number) => {
             edge [arrowsize=0.4, penwidth=1];
     `;
 
-  data.forEach((node: { id: any; incomplete: any; tooltip: any }) => {
-    console.log("node", node);
-    const isSelected = node.id === selectedNodeId;
-    const color = node.incomplete ? "#D6424290" : "#4f5c6e40"; // Standard fill colors
-    const borderColor = isSelected ? "black" : "transparent"; // Border only for selected node
+  data.forEach((node) => {
+    const isSelected = node.nodeId === selectedNodeId;
+    const color = node.incomplete ? "#D6424290" : "#4f5c6e40";
+    const borderColor = isSelected ? "black" : "transparent";
 
     dot += `
-            "${node.id}" [
-                id="node-${node.id}",
+            "${node.nodeId}" [
+                id="node-${node.nodeId}",
                 fillcolor="${color}",
                 tooltip="${node.tooltip}",
-                color="${borderColor}",  // Border color
-                style="filled,setlinewidth(2)"  // Thicker border for visibility
+                color="${borderColor}",
+                style="filled,setlinewidth(2)"
             ];
         `;
   });
@@ -43,11 +42,11 @@ const generateDot = (data: any[], selectedNodeId: number) => {
         .reverse()
         .find((n) => !n.incomplete);
       if (prevCompleteNode) {
-        dot += `"${prevCompleteNode.id}" -> "${node.id}";\n`;
+        dot += `"${prevCompleteNode.nodeId}" -> "${node.nodeId}";\n`;
       }
     } else if (node.incomplete && index > 0) {
       const parentNode = data[index - 1];
-      dot += `"${parentNode.id}" -> "${node.id}" [style=dashed];\n`;
+      dot += `"${parentNode.nodeId}" -> "${node.nodeId}" [style=dashed];\n`;
     }
   });
 
@@ -55,73 +54,79 @@ const generateDot = (data: any[], selectedNodeId: number) => {
   return dot;
 };
 
-// @ts-ignore
-const TreeDiagramGraphviz = ({ data, selectedRow, handleEventClick }) => {
+const TreeDiagramGraphviz = ({
+  allData,
+  data,
+  selectedRow,
+  handleEventClick,
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [contentQuery, setContentQuery] = useState<any[]>([]);
   const [lineageItems, setLineageItems] = useState<any[]>([]);
-  const [detailItems, setDetailItems] = useState<any[]>([]);
   const [nodeSelect, setNodeSelect] = useState<number>(0);
-  // @ts-ignore
+
   useEffect(() => {
     if (data) {
       getChatHistory(data);
     }
 
     function getChatHistory(data: { event_data: any }) {
-      if (data && data.event_data && data.event_data.chatHistory) {
-        setLineageItems(data.event_data.chatHistory);
-      }
       if (
-        data &&
-        data.event_data &&
-        data.event_data.latestResponse &&
-        data.event_data.latestResponse.content
+        data?.event_data?.chatHistory &&
+        Array.isArray(data.event_data.chatHistory)
       ) {
-        setDetailItems(data.event_data.latestResponse.content);
+        // Filter only assistant responses
+        const assistantResponses = data.event_data.chatHistory.filter(
+          (item) => item.role === "assistant",
+        );
+
+        setLineageItems(assistantResponses);
       }
     }
   }, [data]);
 
-  console.log("lineageItems", lineageItems);
-
   useEffect(() => {
     const allData = [];
-    if (selectedRow && selectedRow.stamp) {
-      if (lineageItems && lineageItems.length) {
-        lineageItems.map((item, index) => {
-          const responseStatus = detailItems[index].annotations.filter(
-            (item: { type: string }) => item.type === "response-status",
-          );
+    if (selectedRow?.stamp) {
+      if (lineageItems.length > 0) {
+        lineageItems.forEach((item, index) => {
+          const responseStatus =
+            selectedRow.event_data.latestResponse.annotations.find(
+              (annotation) => annotation.type === "response-status",
+            );
+
+          const itemId = item.id || `generated-${index + 1}`;
+
           const dataItem = {
-            tooltip: `Date: ${format(item.date, "LLL d, yyyy H:mm:ss")}\nTx ID: ${item.hederaTransactionId}`,
-            id: index + 1,
-            incomplete:
-              (responseStatus &&
-                responseStatus.length &&
-                responseStatus[0].data.status === "incomplete") ||
-              false,
             ...item,
+            nodeId: index + 1, // Incremental ID for visualization
+            itemId, // Store eventData.latestResponse.id
+            tooltip: `Date: ${format(item.createdAt, "LLL d, yyyy H:mm:ss")}\nTx ID: ---`,
+            incomplete: responseStatus?.data?.status === "incomplete" || false,
           };
           allData.push(dataItem);
         });
       }
+
       const selectedRowDataItem = {
-        tooltip: `Date: ${format(selectedRow.stamp.date, "LLL d, yyyy H:mm:ss")}\nTx ID: ${selectedRow.stamp.hederaTransactionId}`,
-        id: lineageItems.length + 1,
-        incomplete: selectedRow.status === "incomplete" || false,
         ...selectedRow,
+        nodeId: allData.length + 1,
+        itemId:
+          selectedRow.event_data.latestResponse.id ||
+          `generated-${allData.length + 1}`,
+        tooltip: `Date: ${format(selectedRow.stamp.date, "LLL d, yyyy H:mm:ss")}\nTx ID: ${selectedRow.stamp.hederaTransactionId}`,
+        incomplete: selectedRow.status === "incomplete" || false,
       };
 
       allData.push(selectedRowDataItem);
       setContentQuery(allData);
-      setNodeSelect(allData.length);
+      setNodeSelect(selectedRowDataItem.nodeId);
     }
   }, [lineageItems, selectedRow]);
 
   useEffect(() => {
     const renderGraph = async () => {
-      const dot = generateDot(contentQuery, nodeSelect); // Pass selected node ID
+      const dot = generateDot(contentQuery, nodeSelect);
       try {
         const graphviz = await Graphviz.load();
         const svg = graphviz.layout(dot, "svg", "dot");
@@ -132,7 +137,7 @@ const TreeDiagramGraphviz = ({ data, selectedRow, handleEventClick }) => {
           // Attach click event listeners to nodes after rendering
           contentQuery.forEach((node) => {
             const element = containerRef.current?.querySelector(
-              `#node-${node.id}`,
+              `#node-${node.nodeId}`,
             );
             if (element) {
               element.addEventListener("click", () => handleNodeClick(node));
@@ -147,14 +152,25 @@ const TreeDiagramGraphviz = ({ data, selectedRow, handleEventClick }) => {
     if (contentQuery.length > 0) {
       renderGraph();
     }
-  }, [contentQuery, nodeSelect]); // Re-render when nodeSelect changes
+  }, [contentQuery, nodeSelect]);
 
-  const handleNodeClick = (node: { id: any }) => {
-    handleEventClick(node);
-    setNodeSelect(node.id);
+  const handleNodeClick = (node) => {
+    // Find matching _id in data array using eventData.latestResponse.id (itemId)
+    const matchedEntry = allData.find(
+      (entry) => entry.event_data.latestResponse.id === node.itemId,
+    );
+
+    if (matchedEntry) {
+      handleEventClick({ _id: matchedEntry._id, ...matchedEntry });
+    } else {
+      console.log("No matching entry found for itemId:", node.itemId);
+    }
+
+    setNodeSelect(node.nodeId);
   };
 
   if (contentQuery.length === 0) return null;
+
   return (
     <div className="flex flex-col ml-20 pr-10 mt-5">
       {/* Container with White Background, Border, and Shadow */}
@@ -172,7 +188,7 @@ const TreeDiagramGraphviz = ({ data, selectedRow, handleEventClick }) => {
             ref={containerRef}
             className="min-w-full"
             style={{
-              borderTop: "1px solid #ddd", // Separate title from content
+              borderTop: "1px solid #ddd",
               backgroundColor: "#fff",
               paddingTop: "30px",
               minHeight: "150px",

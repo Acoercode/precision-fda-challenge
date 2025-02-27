@@ -37,6 +37,8 @@ async def get_events(skip: int = 0, limit: int = 10):
         # Query the MongoDB collection with skip and limit
         events = get_all_events(skip, limit)
 
+        PRINT('IN HREEEEEE', events)
+
         if not events:
             return JSONResponse(
                 status_code=404,

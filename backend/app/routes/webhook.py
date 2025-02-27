@@ -1,7 +1,10 @@
 import pymongo
 from fastapi import APIRouter, HTTPException
 from app.services.db import update_event_in_collection
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 router = APIRouter()
 
 MONGO_DB_CLIENT = os.getenv("MONGO_DB_CLIENT")

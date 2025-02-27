@@ -6,13 +6,10 @@ import {
   ReactElement,
   ReactNode,
   ReactPortal,
-  useState,
 } from "react";
 
 // @ts-ignore
-const Table = ({ data, handleEventClick }) => {
-  const [selectedRow, setSelectedRow] = useState(null);
-
+const Table = ({ data, handleEventClick, selectedRow, setSelectedRow }) => {
   const handleRowClick = (item: {
     _id:
       | string
@@ -72,8 +69,7 @@ const Table = ({ data, handleEventClick }) => {
     return `...${str.slice(-6)}`; // Add ellipsis and the last 4 characters.
   };
 
-  console.log("Data", data);
-
+  console.log("selectedRow", selectedRow);
   return (
     <div className="flex flex-col ml-20 pr-10">
       <div className="-m-1.5 overflow-x-auto">
@@ -136,7 +132,7 @@ const Table = ({ data, handleEventClick }) => {
                     ) => (
                       <tr
                         className={
-                          selectedRow === item
+                          selectedRow && selectedRow._id === item._id
                             ? "hover:bg-[#4f5c6e10] bg-[#4f5c6e40]"
                             : "hover:bg-[#4f5c6e10] bg-white"
                         }

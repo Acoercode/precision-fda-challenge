@@ -1,8 +1,11 @@
 import hashlib
 import requests
 import json
+import os
 from app.services.db import post_data_stamping
+from dotenv import load_dotenv
 
+load_dotenv()
 API_KEY = os.getenv("DATA_STAMP_API_KEY")
 API_ROOT = os.getenv("DATA_STAMP_API_ROOT")
 
@@ -11,6 +14,8 @@ def data_stamp_event(collection, data, timestamp):
     """
     Data stamp bundle for trust and save response to db.
     """
+
+    print('AM I IN HERE AT LEAST?')
     # Ensure `data` is serialized to a JSON string
     if isinstance(data, (dict, list)):  # Handle both dictionaries and lists
         data = json.dumps(data, sort_keys=True)  # Serialize into a sorted JSON string

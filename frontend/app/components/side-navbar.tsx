@@ -4,7 +4,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import { AiOutlineAudit } from "react-icons/ai";
 import { IoChatbubblesOutline } from "react-icons/io5";
-import { RiExternalLinkFill, RiLogoutBoxLine } from "react-icons/ri";
+import { RiExternalLinkFill } from "react-icons/ri";
 import acoerLogo from "../../public/BuiltByAcoer.svg";
 import precisionFDALogo from "../../public/precisionFDA.white.svg";
 
@@ -106,7 +106,7 @@ export default function SideNavbar(
             <div
               role="button"
               className={
-                "flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-[#FFDB5880] hover:bg-opacity-80 focus:bg-[#FFDB58] focus:bg-opacity-80 active:bg-yellow-50 active:bg-opacity-80 hover:text-[#0D0D0D] focus:text-[#0D0D0D] active:text-[#0D0D0D] outline-none"
+                "flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-[#4f5c6e40] hover:bg-opacity-80 focus:bg-[#4f5c6e] focus:bg-opacity-80 active:bg-yellow-50 active:bg-opacity-80 hover:text-[#fff] focus:text-[#fff] active:text-[#fff] outline-none"
               }
             >
               <div className="grid place-items-center mr-4">
@@ -115,20 +115,20 @@ export default function SideNavbar(
               FDA Cosmetics Guidance Documents
             </div>
           </a>
-          <a href="/api/auth/logout">
-            <div
-              role="button"
-              className={
-                "flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-[#FFDB5880] hover:bg-opacity-80 focus:bg-[#FFDB58] focus:bg-opacity-80 active:bg-yellow-50 active:bg-opacity-80 hover:text-[#0D0D0D] focus:text-[#0D0D0D] active:text-[#0D0D0D] outline-none"
-              }
-              style={{ marginBottom: 80 }}
-            >
-              <div className="grid place-items-center mr-4">
-                <RiLogoutBoxLine />
-              </div>
-              Log Out
-            </div>
-          </a>
+          {/*<a href="/api/auth/logout">*/}
+          {/*  <div*/}
+          {/*    role="button"*/}
+          {/*    className={*/}
+          {/*      "flex items-center w-full p-3 rounded-lg text-start leading-tight transition-all hover:bg-[#4f5c6e40] hover:bg-opacity-80 focus:bg-[#4f5c6e] focus:bg-opacity-80 active:bg-yellow-50 active:bg-opacity-80 hover:text-[#fff] focus:text-[#fff] active:text-[#fff] outline-none"*/}
+          {/*    }*/}
+          {/*    style={{ marginBottom: 80 }}*/}
+          {/*  >*/}
+          {/*    <div className="grid place-items-center mr-4">*/}
+          {/*      <RiLogoutBoxLine />*/}
+          {/*    </div>*/}
+          {/*    Log Out*/}
+          {/*  </div>*/}
+          {/*</a>*/}
           <a href="https://acoer.com/" target={"_blank"}>
             <div className="flex flex-col items-center">
               <div className="mb-6 p-4 mt-6">

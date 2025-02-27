@@ -85,13 +85,19 @@ const AuditWrapper: React.FC = () => {
         />
       </div>
       <div className="col-span-12 xl:col-span-8">
-        <Table data={events} handleEventClick={handleEventClick} />
+        <Table
+          data={events}
+          handleEventClick={handleEventClick}
+          setSelectedRow={setSelectedRow}
+          selectedRow={selectedRow}
+        />
       </div>
       <div className="col-span-12 xl:col-span-8">
         <TreeDiagramGraphviz
           data={selectedEvent}
           selectedRow={selectedRow}
           handleEventClick={handleEventClick}
+          allData={events}
         />
       </div>
       <div className="col-span-12 xl:col-span-8">
