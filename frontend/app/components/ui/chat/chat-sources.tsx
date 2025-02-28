@@ -29,6 +29,7 @@ type NodeInfo = {
   type: NODE_TYPE;
   path?: string;
   url?: string;
+  page: number;
 };
 
 function getNodeInfo(node: SourceNode): NodeInfo {
