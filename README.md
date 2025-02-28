@@ -1,4 +1,9 @@
-# Technical Analysis of the AI-Powered Chat & Auditing System for the Precision FDA Challenge
+# Acoer  | FDA Cosmetics Guidances AI Companion
+
+GitHub Link: https://github.com/Acoercode/precision-fda-challenge
+Live Demo Link: https://acoer-fda-ai.onrender.com/
+
+## Technical Analysis of the AI-Powered Chat & Auditing System for the Precision FDA Challenge
 
 This project is a retrieval-augmented generation (RAG) system that integrates an AI-powered chat interface with event tracking, auditing mechanisms, and blockchain-based traceability. Designed to ensure response accuracy, transparency, and regulatory compliance, it utilizes a Next.js frontend, FastAPI backend, AI-driven context retrieval, and Hedera Hashgraph for immutable auditing. Below, we analyze its approach, methodology, performance, challenges, and future directions.
 ## Approach and Methodology
