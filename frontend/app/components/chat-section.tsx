@@ -123,7 +123,6 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
         data.stamp.status &&
         data.stamp.status === "RECORDED"
       ) {
-        console.log("STAMP RESPONSE", data);
         setStampResponse([...stampResponse, data]);
         setStampHistory((prev: any) => {
           return [...prev, data.stamp];

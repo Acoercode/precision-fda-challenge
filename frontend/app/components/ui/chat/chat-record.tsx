@@ -5,7 +5,6 @@ import trustSuccess from "../../../../public/trustSuccess.svg";
 import { ChatHandler } from "./chat.interface";
 
 export default function ChatRecord(props: Pick<ChatHandler, "stampResponse">) {
-  console.log("PROPS", props);
   return (
     <div
       className={

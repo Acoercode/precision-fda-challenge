@@ -69,7 +69,6 @@ const Table = ({ data, handleEventClick, selectedRow, setSelectedRow }) => {
     return `...${str.slice(-6)}`; // Add ellipsis and the last 4 characters.
   };
 
-  console.log("selectedRow", selectedRow);
   return (
     <div className="flex flex-col ml-20 pr-10">
       <div className="-m-1.5 overflow-x-auto">
