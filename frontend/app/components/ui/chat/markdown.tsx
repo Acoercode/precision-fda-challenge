@@ -17,12 +17,14 @@ const MemoizedReactMarkdown: FC<Options> = memo(
 const preprocessLaTeX = (content: string) => {
   // Replace block-level LaTeX delimiters \[ \] with $$ $$
   const blockProcessedContent = content.replace(
+      //@ts-ignore
     /\\\[(.*?)\\\]/gs,
     (_, equation) => `$$${equation}$$`,
   );
   // Replace inline LaTeX delimiters \( \) with $ $
   const inlineProcessedContent = blockProcessedContent.replace(
-    /\\\((.*?)\\\)/gs,
+      //@ts-ignore
+      /\\\((.*?)\\\)/gs,
     (_, equation) => `$${equation}$`,
   );
   return inlineProcessedContent;
