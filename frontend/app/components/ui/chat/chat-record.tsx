@@ -5,6 +5,7 @@ import trustSuccess from "../../../../public/trustSuccess.svg";
 import { ChatHandler } from "./chat.interface";
 
 export default function ChatRecord(props: Pick<ChatHandler, "stampResponse">) {
+  console.log("PROPS", props);
   return (
     <div
       className={
@@ -12,10 +13,8 @@ export default function ChatRecord(props: Pick<ChatHandler, "stampResponse">) {
       }
     >
       {props.stampResponse &&
-        ((props.stampResponse.stamp && props.stampResponse.stamp.status) ||
-          (props.stampResponse.event &&
-            props.stampResponse.event.status &&
-            props.stampResponse.event.status === "SUBMITTED")) && (
+        props.stampResponse.status &&
+        props.stampResponse.status === "SUBMITTED" && (
           <div className="flex gap-4">
             <div className="relative flex justify-center items-center">
               <div className="absolute border-gray-300 h-10 w-10 animate-spin rounded-full border-2 border-t-blue-600" />

@@ -56,6 +56,13 @@ export default function ChatMessages(
           if (m.role === "assistant") {
             stampIndexCounter++;
           }
+
+          console.log(
+            "STAMP INDEX",
+            props.stampResponse,
+            stampIndex,
+            props.stampResponse[stampIndex],
+          );
           return (
             <ChatMessage
               key={m.id}

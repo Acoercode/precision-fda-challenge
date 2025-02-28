@@ -1,6 +1,5 @@
 "use client";
 import { ChatHandler } from "@/app/components/ui/chat";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import { AiOutlineAudit } from "react-icons/ai";
 import { IoChatbubblesOutline } from "react-icons/io5";
@@ -11,8 +10,6 @@ import precisionFDALogo from "../../public/precisionFDA.white.svg";
 export default function SideNavbar(
   props: Pick<ChatHandler, "setTabValue" | "tabValue">,
 ) {
-  const { user } = useUser();
-
   const handleOnClick = (type: string) => {
     // @ts-ignore
     props.setTabValue(type);
@@ -23,7 +20,7 @@ export default function SideNavbar(
         <Image
           className="rounded-xl"
           src={precisionFDALogo}
-          alt="Cancer Trials Explorer Logo"
+          alt="Logo"
           width={200}
           style={{ paddingBottom: 10, margin: "auto" }}
           priority
@@ -135,7 +132,7 @@ export default function SideNavbar(
                 <Image
                   className="rounded-xl"
                   src={acoerLogo}
-                  alt="Cancer Trials Explorer Logo"
+                  alt="Acoer Logo"
                   height={50}
                   priority
                   style={{ filter: "grayscale(100%)" }}

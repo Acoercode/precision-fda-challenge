@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { FaUser } from "react-icons/fa";
-import cteLogo from "../../../../public/AIChatIcon.svg";
+import logo from "../../../../public/logo.png";
 
 export default function ChatAvatar({ role }: { role: string }) {
   if (role === "user") {
@@ -14,13 +14,13 @@ export default function ChatAvatar({ role }: { role: string }) {
   }
 
   return (
-    <div className="cancer-trials-explorer-logo-container">
+    <div className="logo-container">
       <Image
         className="rounded-md"
-        src={cteLogo}
-        alt="CTE Logo"
-        width={24}
-        height={24}
+        src={logo}
+        alt="FDA Logo"
+        width={40}
+        // height={30}
         priority
       />
     </div>

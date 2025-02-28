@@ -82,7 +82,6 @@ export function createCallbackManager(stream: StreamData) {
 
   callbackManager.on("retrieve", (data) => {
     const { nodes, query } = data.detail;
-    console.log("RETRIEVE DATA", data.detail);
     appendEventData(stream, `Retrieving context for query: '${query}'`);
     appendEventData(
       stream,
@@ -113,13 +112,13 @@ export function createCallbackManager(stream: StreamData) {
       "The provided information does not specify",
       "unable to provide",
       "I don't have direct access",
-      "Check ClinicalTrials.gov",
       "The context provided does not include",
     ];
     const response = event.detail.payload.response.message;
     // @ts-ignore
     if (
       incompleteResponseContent.some((phrase) =>
+          //@ts-ignore
         response.content.includes(phrase),
       )
     ) {

@@ -1,5 +1,4 @@
 import AuditWrapper from "@/app/components/ui/audit/auditWrapper";
-import { useUser } from "@auth0/nextjs-auth0/client";
 import { Message, useChat } from "ai/react";
 import { useEffect, useRef, useState } from "react";
 import { ChatHandler, ChatInput, ChatMessages } from "./ui/chat";
@@ -26,10 +25,10 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
     onFinish: (res) => {
       recordEvent(res).then((r) => {
         // @ts-ignore
-        const responseUpdate = [...stateRef.current, r];
+        const responseUpdate = [...(stateRef.current || []), r];
         setStampResponse(responseUpdate);
         intervalRef.current = setInterval(() => {
-          updateEvent(r.id).then((res) => {
+          updateEvent(r._id).then((res) => {
             if (
               res.event &&
               res.event.stamp &&
@@ -50,8 +49,7 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
   const [stampHistory, setStampHistory] = useState<any>([]);
   const [chatId, setChatId] = useState<string>("");
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
-  const stateRef = useRef();
-  const { user } = useUser();
+  const stateRef = useRef([]);
   stateRef.current = stampResponse;
 
   useEffect(() => {
@@ -114,7 +112,7 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
 
   const updateEvent = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/events`, {
+      const res = await fetch(`http://localhost:8000/events/${id}`, {
         method: "GET",
       });
       const data = await res.json();
@@ -125,10 +123,12 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
         data.stamp.status &&
         data.stamp.status === "RECORDED"
       ) {
-        setStampResponse(data);
+        console.log("STAMP RESPONSE", data);
+        setStampResponse([...stampResponse, data]);
         setStampHistory((prev: any) => {
           return [...prev, data.stamp];
         });
+        //@ts-ignore
         clearInterval(intervalRef.current);
         intervalRef.current = null;
       }
