@@ -1,6 +1,7 @@
 # Acoer  | FDA Cosmetics Guidances AI Companion
 
 GitHub Link: https://github.com/Acoercode/precision-fda-challenge
+
 Live Demo Link: https://acoer-fda-ai.onrender.com/
 
 ## Technical Analysis of the AI-Powered Chat & Auditing System for the Precision FDA Challenge
