@@ -7,7 +7,7 @@ app = FastAPI()
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=['https://precision-fda-challenge.onrender.com', "http://localhost:3000"],
+    allow_origins=['https://acoer-fda-ai.onrender.com', "http://localhost:3000"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
