@@ -53,7 +53,7 @@ const AuditWrapper: React.FC = () => {
   const fetchEventDetails = async (id: string) => {
     try {
       setDetailsLoading(true);
-      const response = await fetch(`https://acoer-fda-ai.onrender.com/events/${id}`);
+      const response = await fetch(`https://precision-fda-challenge.onrender.com/events/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch events");
       }
