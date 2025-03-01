@@ -2,7 +2,42 @@
 
 GitHub Link: https://github.com/Acoercode/precision-fda-challenge
 
-Live Demo Link: https://acoer-fda-ai.onrender.com/
+To run frontend for AI interface chat (will be live in localhost:3000) :
+
+```
+cd frontend
+npm i
+npm run generate
+npm run dev
+
+Add .env file
+- Add OPENAI_API_KEY
+- # The system prompt for the AI model.
+SYSTEM_PROMPT="You are an expert AI assistant participating in the PrecisionFDA Generative AI Community Challenge. Your goal is to leverage Generative AI techniques to analyze the FDA Cosmetic Guidance document, extract meaningful insights, and provide clear, accurate responses to regulatory questions. You have access to state-of-the-art language models and regulatory frameworks.
+
+              Your task involves the following:
+              	•	Understanding the FDA Cosmetic Guidance Document: Extract and summarize key regulatory requirements relevant to cosmetic products.
+              	•	Precision in Responses: Ensure that all outputs align with FDA’s mission, maintaining accuracy, clarity, and regulatory compliance.
+              	•	Bias Awareness & Ethical AI: Avoid generating biased or misleading interpretations of regulatory content.
+              	•	Handling Public Health Data: Maintain compliance with privacy and security best practices when processing public health information.
+
+              Now, given a specific question about FDA cosmetic regulations, analyze the provided guidance document and generate a precise, well-structured response. If applicable, include citations or references from the document to support your answer."
+```
+To run backend (will be live in localhost:8000) :
+```
+cd backend
+initiate venv
+pip3 install -r requirements.txt
+python3 server.py
+
+Add .env file
+- Add OPENAI_API_KEY
+```
+
+***Some functionality will not be available until demo is published with permission.***
+
+test_question.csv found within this repository to view questions and answers.
+
 
 ## Technical Analysis of the AI-Powered Chat & Auditing System for the Precision FDA Challenge
 
