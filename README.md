@@ -2,6 +2,8 @@
 
 GitHub Link: https://github.com/Acoercode/precision-fda-challenge
 
+Demo Link: https://acoer-fda-ai.onrender.com/
+
 To run frontend for AI interface chat (will be live in localhost:3000) :
 
 ```
@@ -34,9 +36,8 @@ Add .env file
 - Add OPENAI_API_KEY
 ```
 
-***Some functionality will not be available until demo is published with permission.***
 
-test_question.csv found within this repository to view questions and answers.
+***test_question.csv found within this repository to view questions and answers.***
 
 
 ## Technical Analysis of the AI-Powered Chat & Auditing System for the Precision FDA Challenge
