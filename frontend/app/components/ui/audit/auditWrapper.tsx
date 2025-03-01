@@ -53,7 +53,7 @@ const AuditWrapper: React.FC = () => {
   const fetchEventDetails = async (id: string) => {
     try {
       setDetailsLoading(true);
-      const response = await fetch(`http://localhost:8000/events/${id}`);
+      const response = await fetch(`${process.env.APP_API_ROOT}/events/${id}`);
       if (!response.ok) {
         throw new Error("Failed to fetch events");
       }

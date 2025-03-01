@@ -10,7 +10,7 @@ export const POST = async (req, res) => {
     const externalFormData = new FormData();
     externalFormData.append("data", file);
     // Make a call to your external API
-    const response = await fetch("http://localhost:8000/events/record-event", {
+    const response = await fetch(`${process.env.APP_API_ROOT}/events/record-event`, {
       method: "POST",
       body: externalFormData,
     });

@@ -89,7 +89,7 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
     // Create a file from the JSON data
     const body = JSON.stringify(data);
     try {
-      const res = await fetch("http://localhost:8000/events/record-event", {
+      const res = await fetch(`${process.env.APP_API_ROOT}/events/record-event`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -112,7 +112,7 @@ export default function ChatSection(props: Pick<ChatHandler, "tabValue">) {
 
   const updateEvent = async (id: string) => {
     try {
-      const res = await fetch(`http://localhost:8000/events/${id}`, {
+      const res = await fetch(`${process.env.APP_API_ROOT}/events/${id}`, {
         method: "GET",
       });
       const data = await res.json();
