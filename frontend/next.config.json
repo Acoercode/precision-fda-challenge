@@ -1,8 +1,10 @@
 {
+  "reactStrictMode": true,
+  "output": "standalone",
   "experimental": {
+    "serverComponentsExternalPackages": ["sharp", "onnxruntime-node"],
     "outputFileTracingIncludes": {
       "/*": ["./cache/**/*"]
-    },
-    "serverComponentsExternalPackages": ["sharp", "onnxruntime-node"]
+    }
   }
 }
